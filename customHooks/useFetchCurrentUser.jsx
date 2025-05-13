@@ -1,21 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { getUsers } from "../backend/userAPI";
+import { getCurrentLogedUser } from "../backend/authAPI";
 
-export const UseFetchUsers = () => {
+export const UseFetchCurrentUser = () => {
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({});
   const [errors, setErrors] = useState(null);
 
   //Fetch books
 
-  const fetchUsers = async () => {
+  const fetchUser = async () => {
     try {
-      const UserLista = await getUsers();
-      if (UserLista.length === 0) {
-        return console.log("Det finns inga Users o visa");
+      const response = await getCurrentLogedUser();
+      if (!response) {
+        return console.log("Det finns inga User o visa");
       }
-      setUsers(UserLista);
+      setUser(response || {});
       setLoading(false);
     } catch (error) {
       console.error("Error", error.message);
@@ -27,12 +28,12 @@ export const UseFetchUsers = () => {
   // call useEffect
 
   useEffect(() => {
-    fetchUsers();
+    fetchUser();
   }, []);
 
   //Return loading, books,errors som ett objekt
   return {
-    users,
+    user,
     loading,
     errors,
   };

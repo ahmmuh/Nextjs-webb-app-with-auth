@@ -31,7 +31,9 @@ export const getUser = async (userId) => {
 
 export const updateUser = async (userId, updatedUser) => {
   try {
-    const res = await axios.patch(`${BASE_URL}/users/${userId}`, updatedUser);
+    const res = await axios.patch(`${BASE_URL}/users/${userId}`, updatedUser, {
+      withCredentials: true,
+    });
     return res.data;
   } catch (error) {
     console.error(`Kunde inte hämta user, error: ${error.message}`);

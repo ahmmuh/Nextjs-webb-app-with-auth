@@ -1,5 +1,5 @@
 import React from "react";
-import UserRegistrationForm from "../../../../component/users/userRegisterForm";
+import BookRegistrationForm from "../../../../../component/books/bookRegistrationForm";
 
 function CreateBook() {
   return <BookRegistrationForm />;

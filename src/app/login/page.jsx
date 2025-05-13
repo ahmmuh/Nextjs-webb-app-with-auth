@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { loginUser } from "../../../../backend/authAPI";
-import { displayError, displaySuccess } from "../../../../toast/dispayToast";
+import { loginUser } from "../../../backend/authAPI";
+import { displayError, displaySuccess } from "../../../toast/dispayToast";
 import { useRouter } from "next/navigation";
 
 function UserLogin() {
@@ -26,13 +26,17 @@ function UserLogin() {
       password: user.password,
     };
     try {
+      if (!loggedUser.username || !loggedUser.password) {
+        return;
+      }
       await loginUser(loggedUser);
+      setUser(loggedUser);
       displaySuccess("Inloggad");
-      router.push("/");
+      router.push("/protected/dashboard");
     } catch (error) {
       console.log("User who want to login", loggedUser);
       displayError("User who want to login");
-      router.push("/");
+      router.push("/login");
     }
   };
   return (
